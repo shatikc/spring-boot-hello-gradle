@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-boot-hello-gradle
+  namespace: hskim
 spec:
   selector:
     matchLabels:
@@ -27,6 +28,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: spring-boot-hello-gradle
+  namespace: hskim
 spec:
   selector:
     app: spring-boot-hello-gradle
