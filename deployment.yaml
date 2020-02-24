@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-boot-hello-gradle
-  namespace: hskim
+  name: $JOB_NAME
+  namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
-      app: spring-boot-hello-gradle
+      app: $JOB_NAME
   template:
     metadata:
       labels:
-        app: spring-boot-hello-gradle
+        app: $JOB_NAME
     spec:
       containers:
-      - name: spring-boot-hello-gradle
-        image: whitekim88/spring-boot-hello-gradle:$BUILD_NUMBER
+      - name: $JOB_NAME
+        image: $DOCKER_HUB_ID/$JOB_NAME:$BUILD_NUMBER
         resources:
           limits:
             memory: "0"
@@ -27,11 +27,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-boot-hello-gradle
-  namespace: hskim
+  name: $JOB_NAME
+  namespace: $NAMESPACE
 spec:
   selector:
-    app: spring-boot-hello-gradle
+    app: $JOB_NAME
   ports:
   - port: 8080
     targetPort: 8080
