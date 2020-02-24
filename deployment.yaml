@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: spring-boot-hello-gradle
-        image: whitekim88/spring-boot-hello-gradle:latest
+        image: whitekim88/spring-boot-hello-gradle:v1
         resources:
           limits:
             memory: "0"
