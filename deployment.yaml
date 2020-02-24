@@ -15,6 +15,7 @@ spec:
       containers:
       - name: $JOB_NAME
         image: $DOCKER_HUB_ID/$JOB_NAME:$BUILD_NUMBER
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "0"
