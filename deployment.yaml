@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-hello-gradle
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot-hello-gradle
+  template:
+    metadata:
+      labels:
+        app: spring-boot-hello-gradle
+    spec:
+      containers:
+      - name: spring-boot-hello-gradle
+        image: whitekim88/spring-boot-hello-gradle:latest
+        resources:
+          limits:
+            memory: "0"
+            cpu: "0"
+        ports:
+        - containerPort: 8080
+          name: http-port
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-hello-gradle
+spec:
+  selector:
+    app: spring-boot-hello-gradle
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 32111
