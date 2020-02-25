@@ -30,7 +30,7 @@ pipeline {
     stage('docker push') {
       steps {
         withDockerRegistry(credentialsId: DOCKER_REGISTRY_CREDENTIAL, url: 'https://index.docker.io/v1/') {
-          sh 'docker push -t $DOCKER_HUB_ID/$DOCKER_IMAGE_NAME:$BUILD_NUMBER'
+          sh 'docker push $DOCKER_HUB_ID/$DOCKER_IMAGE_NAME:$BUILD_NUMBER'
         }
       }
     }
