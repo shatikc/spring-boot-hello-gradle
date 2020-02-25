@@ -28,7 +28,7 @@ pipeline {
 
     stage('docker push') {
       steps {
-        withDockerRegistry(credentialsId: DOCKER_REGISTRY_CREDENTIAL, url: 'https://docker.io') {
+        withDockerRegistry(credentialsId: DOCKER_REGISTRY_CREDENTIAL, url: 'https://index.docker.io/v1/') {
           sh 'docker push $DOCKER_HUB_ID/$JOB_NAME:$BUILD_NUMBER'
         }
       }
