@@ -11,7 +11,7 @@ pipeline {
    stages {
     stage('git') {
       steps {
-        git url: 'https://github.com/HyeonSeongKim/'"$DOCKER_IMAGE_NAME"'.git', credentialsId: 'github-account', branch: 'master'
+        git url: 'https://github.com/HyeonSeongKim/spring-boot-hello-gradle.git', credentialsId: 'github-account', branch: 'master'
       }
     }
     
