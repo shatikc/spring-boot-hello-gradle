@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: $JOB_NAME
+  name: $DOCKER_IMAGE_NAME
   namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
-      app: $JOB_NAME
+      app: $DOCKER_IMAGE_NAME
   template:
     metadata:
       labels:
-        app: $JOB_NAME
+        app: $DOCKER_IMAGE_NAME
     spec:
       containers:
-      - name: $JOB_NAME
-        image: $DOCKER_HUB_ID/$JOB_NAME:$BUILD_NUMBER
+      - name: $DOCKER_IMAGE_NAME
+        image: $DOCKER_HUB_ID/$DOCKER_IMAGE_NAME:$BUILD_NUMBER
         imagePullPolicy: Always
         resources:
           limits:
@@ -28,11 +28,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: $JOB_NAME
+  name: $DOCKER_IMAGE_NAME
   namespace: $NAMESPACE
 spec:
   selector:
-    app: $JOB_NAME
+    app: $DOCKER_IMAGE_NAME
   ports:
   - port: 8080
     targetPort: 8080
