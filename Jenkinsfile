@@ -11,7 +11,7 @@ pipeline {
    stages {
     stage('git') {
       steps {
-        git url: 'https://github.com/HyeonSeongKim/$DOCKER_IMAGE_NAME.git', credentialsId: 'github-account', branch: 'master'
+        git url: 'https://github.com/HyeonSeongKim/'"$DOCKER_IMAGE_NAME"'.git', credentialsId: 'github-account', branch: 'master'
       }
     }
     
@@ -23,14 +23,14 @@ pipeline {
 
     stage('docker build') {
       steps {
-        sh 'docker build -t $DOCKER_HUB_ID/DOCKER_IMAGE_NAME:$BUILD_NUMBER .'
+        sh 'docker build -t $DOCKER_HUB_ID/$DOCKER_IMAGE_NAME:$BUILD_NUMBER .'
       }
     }
 
     stage('docker push') {
       steps {
         withDockerRegistry(credentialsId: DOCKER_REGISTRY_CREDENTIAL, url: 'https://index.docker.io/v1/') {
-          sh 'docker push -t $DOCKER_HUB_ID/DOCKER_IMAGE_NAME:$BUILD_NUMBER'
+          sh 'docker push -t $DOCKER_HUB_ID/$DOCKER_IMAGE_NAME:$BUILD_NUMBER'
         }
       }
     }
