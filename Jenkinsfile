@@ -4,14 +4,15 @@ pipeline {
    environment {
      DOCKER_HUB_ID = "hskim88"
      NAMESPACE = "hskim"
-     DOCKER_REGISTRY_CREDENTIAL = "docker-hub-hskim88"
+     DOCKER_REGISTRY_CREDENTIAL = "docker-hub-account"
      DOCKER_IMAGE_NAME = "spring-boot-hello-gradle"
+     GITHUB_CREDENTIAL = "github-account"
    }
 
    stages {
     stage('git') {
       steps {
-        git url: 'https://github.com/HyeonSeongKim/spring-boot-hello-gradle.git', credentialsId: 'github-account', branch: 'master'
+        git url: 'https://github.com/HyeonSeongKim/spring-boot-hello-gradle.git', credentialsId: GITHUB_CREDENTIAL, branch: 'master'
       }
     }
     
