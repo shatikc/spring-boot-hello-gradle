@@ -1,21 +1,12 @@
 pipeline {
-   agent any
-
-   environment {
-     DOCKER_HUB_ID = "hskim88"
-     NAMESPACE = "hskim"
-     DOCKER_REGISTRY_CREDENTIAL = "docker-hub-account"
-     DOCKER_IMAGE_NAME = "spring-boot-hello-gradle"
-     GITHUB_CREDENTIAL = "github-account"
-   }
-
-   stages {
+  agent any
+  stages {
     stage('git') {
       steps {
-        git url: 'https://github.com/HyeonSeongKim/spring-boot-hello-gradle.git', credentialsId: GITHUB_CREDENTIAL, branch: 'master'
+        git(url: 'https://github.com/HyeonSeongKim/spring-boot-hello-gradle.git', credentialsId: GITHUB_CREDENTIAL, branch: 'master')
       }
     }
-    
+
     stage('gradle build') {
       steps {
         sh './gradlew clean build'
@@ -33,13 +24,22 @@ pipeline {
         withDockerRegistry(credentialsId: DOCKER_REGISTRY_CREDENTIAL, url: 'https://index.docker.io/v1/') {
           sh 'docker push $DOCKER_HUB_ID/$DOCKER_IMAGE_NAME:$BUILD_NUMBER'
         }
+
       }
     }
 
     stage('kubernetes deploy') {
       steps {
-        kubernetesDeploy configs: 'deployment.yaml', kubeconfigId: 'kubeconfig60'
+        kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: 'kubeconfig')
       }
     }
-   }
+
+  }
+  environment {
+    DOCKER_HUB_ID = 'hskim88'
+    NAMESPACE = 'hskim'
+    DOCKER_REGISTRY_CREDENTIAL = 'docker-hub-account'
+    DOCKER_IMAGE_NAME = 'spring-boot-hello-gradle'
+    GITHUB_CREDENTIAL = 'github-account'
+  }
 }
