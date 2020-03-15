@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGODB_INITDB_DATABASE: test_db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/test_db
+    networks:
+      - mongo-app
+
+  application_container:
+    image: app-test:latest
+    build:
+      context: ../
+      args:
+        JAR_PATH: build/libs/*.jar
+    ports:
+      - 8080:8082
+    networks:
+      - mongo-app
+    depends_on:
+      - mongodb_container
+    environment:
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_HOST: mongodb_container
+      SPRING_DATA_MONGODB_USERNAME: root
+      SPRING_DATA_MONGODB_PASSWORD: root
+      SPRING_DATA_MONGODB_DATABASE: test_db
+      SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE: admin
+volumes:
+  mongodb_data_container:
+
+networks:
+  mongo-app:
