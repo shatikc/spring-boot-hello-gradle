@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AddUserService {
 
-    @NonNull
-    private UserCrudRepo userCrudRepo;
+    private final UserCrudRepo userCrudRepo;
 
     public User addNewUser(User user) {
         User result = null;
